@@ -4,7 +4,6 @@ import launchpadlib
 from launchpadlib.launchpad import Launchpad
 
 cachedir = "/home/alexhung/.launchpadlib/cache/"
-logfile = "bugs_yesterday.log"
 
 def no_credential():
     print("Can't proceed without Launchpad credential.")
@@ -61,6 +60,8 @@ def main():
 
     myself = launchpad.me
     bugs_assigned = myself.searchTasks(assignee = myself)
+
+    logfile = str(sys.argv[1])
 
     print('Hello, %s! Your bug number: %d' % (myself.display_name, bugs_assigned.total_size))
     print("")

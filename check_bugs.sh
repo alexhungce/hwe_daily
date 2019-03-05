@@ -7,7 +7,7 @@ BUGS_FILE="bugs_yesterday.log"
 while true ; do
 
 	cp -f ${DROPBOX_DIR}/${BUGS_FILE} .
-	./lp_bugs_tracer.py
+	./lp_bugs_tracer.py ${BUGS_FILE}
 	ret=$?
 	if [ $ret -eq 0 ] ; then
 		read -t 900 -p "No updates for launchpad bugs. Wait for 15 mins or continue by [Enter]..."
