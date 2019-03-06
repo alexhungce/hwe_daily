@@ -64,7 +64,6 @@ def main():
     logfile = str(sys.argv[1])
 
     print('Hello, %s! Your bug number: %d' % (myself.display_name, bugs_assigned.total_size))
-    print("")
 
     lp_list = get_bugs_lp(myself)
     file_list = get_bugs_file(logfile)
