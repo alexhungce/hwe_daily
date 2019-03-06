@@ -6,6 +6,8 @@ BUGS_FILE="bugs_yesterday.log"
 
 while true ; do
 
+	date "+%F %r"
+
 	cp -f ${DROPBOX_DIR}/${BUGS_FILE} .
 	./lp_bugs_tracer.py ${BUGS_FILE}
 	ret=$?
