@@ -38,7 +38,10 @@ def get_bugs_lp(user):
 def get_bugs_file(filename):
     bugs_dict = {}
 
-    f = open(filename, "r")
+    try:
+        f = open(filename, "r")
+    except IOError:
+        f = open(filename, "w+")
 
     for line in f:
         line = line.strip()
