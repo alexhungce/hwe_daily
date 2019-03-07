@@ -11,7 +11,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-
 BACKUP_DIR="$HOME/Dropbox/canonical/launchpad"
 PROJECT_FILES=( "bugs_yesterday.log" )
 BUGS_FILE="bugs_yesterday.log"
@@ -20,7 +19,7 @@ while true ; do
 
 	date "+%F %r"
 
-	cp -f ${BACKUP_DIR}/${BUGS_FILE} .
+	[ -d $BACKUP_DIR ] && cp -f ${BACKUP_DIR}/${BUGS_FILE} .
 	./lp_bugs_tracer.py ${BUGS_FILE}
 	ret=$?
 	if [ $ret -eq 0 ] ; then
@@ -31,7 +30,9 @@ while true ; do
 		echo ""
 		read -p "Press [Enter] to continue..."
 
-		diff ${BUGS_FILE} ${BACKUP_DIR}/${BUGS_FILE} >> /dev/null
+
+		[ -d $BACKUP_DIR ] || continue
+		diff ${BUGS_FILE} ${BACKUP_DIR}/${BUGS_FILE} &> /dev/null
 		if [ $? -ne 0 ] ; then
 			cp ${BUGS_FILE} ${BACKUP_DIR}/${BUGS_FILE}
 			echo "Update log file ${BUGS_FILE} to backup directory..."
