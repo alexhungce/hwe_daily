@@ -59,7 +59,7 @@ def print_updates(new_dict):
 
     for key in new_dict:
         bug = launchpad.bugs[key]
-        print(" * %d - %s [] | %s" % (bug.id, bug.title, bug.web_link))
+        print("  * %d - %s [] | %s" % (bug.id, bug.title, bug.web_link))
 
 def update_bug_to_file(filename, bugs_dict):
 
