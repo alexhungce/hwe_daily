@@ -11,9 +11,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import sys
-import os
-import launchpadlib
+import sys, os, launchpadlib
 from launchpadlib.launchpad import Launchpad
 
 cachedir = os.environ['HOME'] + "/.launchpadlib/cache/"
