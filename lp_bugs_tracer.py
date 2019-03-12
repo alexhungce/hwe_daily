@@ -55,11 +55,23 @@ def get_bugs_file(filename):
 
     return bugs_dict
 
-def print_updates(new_dict):
+def print_updates(lp_dict, file_dict):
+
+    new_dict = dict(set(lp_dict.items()) ^ set(file_dict.items()))
 
     for key in new_dict:
+        diff = "*"
+
+        if key not in lp_dict:
+            diff = "-"
+        elif key not in file_dict:
+            diff = "+"
+
         bug = launchpad.bugs[key]
-        print("  * %d - %s [] | %s" % (bug.id, bug.title, bug.web_link))
+        print("  %s %d - %s [] | %s" % (diff, bug.id, bug.title, bug.web_link))
+
+
+    return new_dict
 
 def update_bug_to_file(filename, bugs_dict):
 
@@ -82,9 +94,8 @@ def main():
 
     lp_list = get_bugs_lp(myself)
     file_list = get_bugs_file(logfile)
-    updates_dict = dict(set(lp_list.items()) ^ set(file_list.items()))
 
-    print_updates(updates_dict)
+    updates_dict = print_updates(lp_list, file_list)
 
     if len(updates_dict) != 0:
         update_bug_to_file(logfile, lp_list)
