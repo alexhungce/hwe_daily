@@ -12,7 +12,6 @@
 # GNU General Public License for more details.
 
 BACKUP_DIR="$HOME/Dropbox/canonical/launchpad"
-PROJECT_FILES=( "bugs_yesterday.log" )
 BUGS_FILE="bugs_yesterday.log"
 
 while true ; do
