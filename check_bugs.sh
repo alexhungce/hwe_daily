@@ -20,7 +20,7 @@ while true ; do
 	date "+%F %r"
 
 	[ -d $BACKUP_DIR ] && cp -f ${BACKUP_DIR}/${BUGS_FILE} .
-	./lp_bugs_tracer.py ${BUGS_FILE}
+	./trace_bugs.py ${BUGS_FILE}
 	ret=$?
 	if [ $ret -eq 0 ] ; then
 		read -t 900 -p "No updates for launchpad bugs. Wait for 15 mins or continue by [Enter]..."
