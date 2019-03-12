@@ -12,10 +12,11 @@
 # GNU General Public License for more details.
 
 import sys
+import os
 import launchpadlib
 from launchpadlib.launchpad import Launchpad
 
-cachedir = "/home/alexhung/.launchpadlib/cache/"
+cachedir = os.environ['HOME'] + "/.launchpadlib/cache/"
 
 def no_credential():
     print("Can't proceed without Launchpad credential.")
