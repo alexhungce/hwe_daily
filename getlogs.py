@@ -29,7 +29,7 @@ def main():
 
     bug = launchpad.bugs[sys.argv[1]]
 
-    print("Get logs for %s | %s" % (bug.web_link, bug.title))
+    print("Get logs for %s" % (bug.web_link))
 
     attachs = bug.attachments
     for attach in attachs:
