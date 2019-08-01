@@ -25,6 +25,7 @@ while true ; do
 		read -t 900 -p "No updates for launchpad bugs. Wait for 15 mins or continue by [Enter]..."
 		printf "\n\n"
 	elif [ $ret -eq 100 ] ; then
+		echo ""
 		echo "Launchpad updates are by $(whoami)..."
 		[ -d $BACKUP_DIR ] || continue
 		diff ${BUGS_FILE} ${BACKUP_DIR}/${BUGS_FILE} &> /dev/null
