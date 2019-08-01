@@ -72,6 +72,16 @@ def print_updates(lp_dict, file_dict):
 
     return new_dict
 
+def check_myself_updates(myself, updates_dict):
+
+    for key in updates_dict:
+        bug = launchpad.bugs[key]
+        last_message = bug.messages_collection[bug.message_count - 1]
+        if last_message.owner.name != myself.name:
+            return False
+
+    return True
+
 def update_bug_to_file(filename, bugs_dict):
 
     f = open(filename, "w+")
@@ -98,6 +108,10 @@ def main():
 
     if len(updates_dict) != 0:
         update_bug_to_file(logfile, lp_list)
+
+        if check_myself_updates(myself, updates_dict):
+            return 100
+
         return 255
 
     return 0

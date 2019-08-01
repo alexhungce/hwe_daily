@@ -24,11 +24,19 @@ while true ; do
 	if [ $ret -eq 0 ] ; then
 		read -t 900 -p "No updates for launchpad bugs. Wait for 15 mins or continue by [Enter]..."
 		printf "\n\n"
+	elif [ $ret -eq 100 ] ; then
+		echo "Launchpad updates are by $(whoami)..."
+		[ -d $BACKUP_DIR ] || continue
+		diff ${BUGS_FILE} ${BACKUP_DIR}/${BUGS_FILE} &> /dev/null
+		if [ $? -ne 0 ] ; then
+			cp ${BUGS_FILE} ${BACKUP_DIR}/${BUGS_FILE}
+			echo "Update log file ${BUGS_FILE} to backup directory..."
+			echo ""
+		fi
 	elif [ $ret -eq 255 ] ; then
 		notify-send "Launchpad updates are available!"
 		echo ""
 		read -p "Press [Enter] to continue..."
-
 
 		[ -d $BACKUP_DIR ] || continue
 		diff ${BUGS_FILE} ${BACKUP_DIR}/${BUGS_FILE} &> /dev/null
