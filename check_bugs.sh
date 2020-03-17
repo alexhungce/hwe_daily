@@ -47,6 +47,7 @@ while true ; do
 			echo ""
 		fi
 	else
+		notify-send "Something went wrong... Exiting launchpad_bugs!"
 		exit
 	fi
 done
