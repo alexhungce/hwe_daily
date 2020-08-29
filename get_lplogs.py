@@ -39,8 +39,21 @@ def main():
     myself = launchpad.me
     bugs_assigned = myself.searchTasks(assignee = myself)
 
-    bug = launchpad.bugs[sys.argv[1]]
-    get_attachment(bug)
+    if os.path.isfile(sys.argv[1]) == False:
+        bug = launchpad.bugs[sys.argv[1]]
+        get_attachment(bug)
+    else:
+        with open(sys.argv[1], "r") as bugs_list:
+            bug_dir = "bug-logs"
+            os.mkdir(bug_dir)
+            os.chdir(bug_dir)
+            for line in bugs_list:
+                stripped = line.strip()
+                os.mkdir(stripped)
+                os.chdir(stripped)
+                bug = launchpad.bugs[stripped]
+                get_attachment(bug)
+                os.chdir("..")
 
     return 0
 
