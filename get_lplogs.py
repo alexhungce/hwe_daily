@@ -22,12 +22,7 @@ def no_credential():
 
 launchpad = Launchpad.login_with('Daily_track', 'production', credential_save_failed=no_credential, version='devel')
 
-def main():
-
-    myself = launchpad.me
-    bugs_assigned = myself.searchTasks(assignee = myself)
-
-    bug = launchpad.bugs[sys.argv[1]]
+def get_attachment(bug):
 
     print("Get logs for %s" % (bug.web_link))
 
@@ -38,6 +33,14 @@ def main():
         with open(attach.title, 'wb+') as f:
             f.write(attach.data.open().getvalue())
             f.close()
+
+def main():
+
+    myself = launchpad.me
+    bugs_assigned = myself.searchTasks(assignee = myself)
+
+    bug = launchpad.bugs[sys.argv[1]]
+    get_attachment(bug)
 
     return 0
 
