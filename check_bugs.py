@@ -158,7 +158,7 @@ def main():
     args = parser.parse_args()
 
     while True:
-        print(datetime.now().strftime("%Y-%M-%d %I:%M:%S %p"))
+        print(datetime.now().strftime("%Y-%m-%d %I:%M:%S %p"))
         process_results(args.file, args.dir)
 
     return 0
