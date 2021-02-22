@@ -11,8 +11,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import sys, os, select, launchpadlib
+import sys, os, argparse
 from launchpadlib.launchpad import Launchpad
+from select import select
 from getpass import getuser
 from subprocess import run
 from datetime import datetime
@@ -119,6 +120,9 @@ def trace_bugs(logfile):
 
 def update_to_dest(bug_file, backup_dir):
 
+    if backup_dir == None:
+        return
+
     dir = os.environ['HOME'] + "/" + backup_dir
     if not os.path.exists(dir):
         return
@@ -133,7 +137,7 @@ def process_results(bug_file, backup_dir):
     result = trace_bugs(bug_file)
     if result == 0:
         print ("No updates for launchpad bugs. Wait for 15 mins or continue by [Enter]...")
-        i, o, e = select.select( [sys.stdin], [], [], 900)
+        i, o, e = select( [sys.stdin], [], [], 900)
         if (i):
             sys.stdin.readline().strip()
     elif result == 100:
@@ -148,12 +152,14 @@ def process_results(bug_file, backup_dir):
 
 def main():
 
-    bug_file = str(sys.argv[1])
-    backup_dir = str(sys.argv[2])   # relative to $HOME, i.e. "launchpad" when in $HOME/launchpad
+    parser = argparse.ArgumentParser(description='Check the updates of assigned bugs.')
+    parser.add_argument("-f", "--file", help="bug list", required=True)
+    parser.add_argument("-d", "--dir", help="sync dir - 'launchpad' when in $HOME/launchpad")
+    args = parser.parse_args()
 
     while True:
         print(datetime.now().strftime("%Y-%M-%d %I:%M:%S %p"))
-        process_results(bug_file, backup_dir)
+        process_results(args.file, args.dir)
 
     return 0
 
