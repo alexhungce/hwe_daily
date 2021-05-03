@@ -11,7 +11,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import sys, os, launchpadlib
+import sys, os, launchpadlib, argparse
 from launchpadlib.launchpad import Launchpad
 
 cachedir = os.environ['HOME'] + "/.launchpadlib/cache/"
@@ -39,11 +39,16 @@ def main():
     myself = launchpad.me
     bugs_assigned = myself.searchTasks(assignee = myself)
 
-    if os.path.isfile(sys.argv[1]) == False:
-        bug = launchpad.bugs[sys.argv[1]]
+    parser = argparse.ArgumentParser(description='Get attachments from Launchpad bug(s).')
+    parser.add_argument("-n", "--bug_num", help="a Launchpad bug")
+    parser.add_argument("-f", "--file", help="a list of Launchpad bugs ")
+    args = parser.parse_args()
+
+    if args.bug_num:
+        bug = launchpad.bugs[args.bug_num]
         get_attachment(bug)
-    else:
-        with open(sys.argv[1], "r") as bugs_list:
+    if args.file:
+        with open(args.file, "r") as bugs_list:
             bug_dir = "bug-logs"
             os.mkdir(bug_dir)
             os.chdir(bug_dir)
